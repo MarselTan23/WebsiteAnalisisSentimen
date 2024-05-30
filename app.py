@@ -2,9 +2,40 @@ import streamlit as st
 import pandas as pd
 import joblib
 from preprocessing import normalisasi, stopword, stemming
+import base64
 
 # Set up the main title and sidebar options
-st.set_page_config(page_title="Sentiment Analysis GAME", layout="wide")
+st.set_page_config(page_title="Sentiment Analysis GAME")
+
+# Function to load and encode an image file
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+ 
+# Get the base64 string of the image
+background_image_path = 'bg.jpg'  # Ensure this image is in the same directory
+background_image_base64 = get_base64_of_bin_file(background_image_path)
+ 
+# Embed CSS directly in the app
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url("data:image/jpg;base64,{background_image_base64}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    .stApp > div {{
+        background: rgba(0, 0, 0, 0.5);  /* Black background with transparency */
+        padding: 20px;
+        border-radius: 10px;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 # CSS kustom untuk mengubah font dan gaya
 st.markdown("""
@@ -13,11 +44,11 @@ st.markdown("""
         font-family: 'Arial', sans-serif;
     }
     .main-title {
-        color: #4CAF50;
+        color: gold;
         text-align: center;
     }
     .header {
-        color: #3f51b5;
+        color: gold;
     }
     .result-positive {
         color: green;
